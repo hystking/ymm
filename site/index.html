@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ymm — Serverless Music Player</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="player">
+    <header class="player__header">
+      <h1 class="player__title">ymm</h1>
+      <p class="player__subtitle">serverless music player</p>
+    </header>
+
+    <section class="now-playing">
+      <div class="now-playing__art" id="art" aria-hidden="true">♪</div>
+      <div class="now-playing__meta">
+        <div class="now-playing__track" id="trackTitle">No track</div>
+        <div class="now-playing__artist" id="trackArtist">—</div>
+      </div>
+    </section>
+
+    <section class="progress">
+      <span class="progress__time" id="curTime">0:00</span>
+      <input class="progress__bar" id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Seek" />
+      <span class="progress__time" id="durTime">0:00</span>
+    </section>
+
+    <section class="controls">
+      <button class="controls__btn" id="prevBtn" title="Previous" aria-label="Previous">⏮</button>
+      <button class="controls__btn controls__btn--play" id="playBtn" title="Play / Pause" aria-label="Play">▶</button>
+      <button class="controls__btn" id="nextBtn" title="Next" aria-label="Next">⏭</button>
+      <button class="controls__btn controls__btn--toggle" id="shuffleBtn" title="Shuffle" aria-label="Shuffle">🔀</button>
+      <button class="controls__btn controls__btn--toggle" id="repeatBtn" title="Repeat" aria-label="Repeat">🔁</button>
+      <input class="controls__volume" id="volume" type="range" min="0" max="1" value="1" step="0.01" aria-label="Volume" />
+    </section>
+
+    <section class="playlist">
+      <h2 class="playlist__heading">Playlist</h2>
+      <ol class="playlist__list" id="playlist"></ol>
+    </section>
+
+    <p class="status" id="status"></p>
+  </main>
+
+  <audio id="audio" preload="metadata"></audio>
+  <script src="app.js"></script>
+</body>
+</html>

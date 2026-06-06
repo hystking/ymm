@@ -1,0 +1,15 @@
+# Music files — your own mp3s, don't commit them
+music/*
+!music/.gitkeep
+
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+terraform/terraform.tfvars
+crash.log
+*.tfplan
+
+# OS
+.DS_Store

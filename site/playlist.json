@@ -1,0 +1,6 @@
+{
+  "tracks": [
+    { "title": "Sample Track 1", "artist": "Your Artist", "src": "music/sample1.mp3" },
+    { "title": "Sample Track 2", "artist": "Your Artist", "src": "music/sample2.mp3" }
+  ]
+}

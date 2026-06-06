@@ -1,0 +1,20 @@
+// CloudFront Function (cloudfront-js-2.0) — HTTP Basic Auth gate.
+// Runs on every viewer request before the cache/origin is consulted.
+// The expected credential is injected by Terraform via templatefile().
+function handler(event) {
+  var request = event.request;
+  var headers = request.headers;
+  var expected = "Basic ${auth_b64}";
+
+  if (!headers.authorization || headers.authorization.value !== expected) {
+    return {
+      statusCode: 401,
+      statusDescription: "Unauthorized",
+      headers: {
+        "www-authenticate": { value: 'Basic realm="${realm}", charset="UTF-8"' }
+      }
+    };
+  }
+
+  return request;
+}
