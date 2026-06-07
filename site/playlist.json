@@ -1,6 +1,28 @@
 {
   "tracks": [
-    { "title": "Sample Track 1", "artist": "Your Artist", "src": "music/sample1.mp3" },
-    { "title": "Sample Track 2", "artist": "Your Artist", "src": "music/sample2.mp3" }
+    { "title": "01 おんがくってふしぎ！", "artist": "Unknown artist", "src": "music/01 おんがくってふしぎ！.mp3" },
+    { "title": "02 まんぷくマーチ", "artist": "Unknown artist", "src": "music/02 まんぷくマーチ.mp3" },
+    { "title": "03 のはらであそぼう！", "artist": "Unknown artist", "src": "music/03 のはらであそぼう！.mp3" },
+    { "title": "04 たんぽぽ", "artist": "Unknown artist", "src": "music/04 たんぽぽ.mp3" },
+    { "title": "05 おさんぽマーチ", "artist": "Unknown artist", "src": "music/05 おさんぽマーチ.mp3" },
+    { "title": "06 ドレミのおたまじゃくし", "artist": "Unknown artist", "src": "music/06 ドレミのおたまじゃくし.mp3" },
+    { "title": "07 イルカモメ!?", "artist": "Unknown artist", "src": "music/07 イルカモメ!?.mp3" },
+    { "title": "08 かがみのおどり ～バレエ音楽「ファウスト」より", "artist": "Unknown artist", "src": "music/08 かがみのおどり ～バレエ音楽「ファウスト」より.mp3" },
+    { "title": "09 ぱっぴっぷっ！", "artist": "Unknown artist", "src": "music/09 ぱっぴっぷっ！.mp3" },
+    { "title": "10 おもちゃのおうえんだん", "artist": "Unknown artist", "src": "music/10 おもちゃのおうえんだん.mp3" },
+    { "title": "11 かえるケロケロ", "artist": "Unknown artist", "src": "music/11 かえるケロケロ.mp3" },
+    { "title": "12 なかよしおんがくたい", "artist": "Unknown artist", "src": "music/12 なかよしおんがくたい.mp3" },
+    { "title": "13 カニさんビーチ", "artist": "Unknown artist", "src": "music/13 カニさんビーチ.mp3" },
+    { "title": "14 うみであそぼう！", "artist": "Unknown artist", "src": "music/14 うみであそぼう！.mp3" },
+    { "title": "15 ドレミのかえる", "artist": "Unknown artist", "src": "music/15 ドレミのかえる.mp3" },
+    { "title": "16 わっ！びっくり", "artist": "Unknown artist", "src": "music/16 わっ！びっくり.mp3" },
+    { "title": "17 マネレンジャー", "artist": "Unknown artist", "src": "music/17 マネレンジャー.mp3" },
+    { "title": "18 ふわふわしゃぼんだま", "artist": "Unknown artist", "src": "music/18 ふわふわしゃぼんだま.mp3" },
+    { "title": "19 ジーグ ～バレエ音楽「コッペリア」より", "artist": "Unknown artist", "src": "music/19 ジーグ ～バレエ音楽「コッペリア」より.mp3" },
+    { "title": "20 むしのコーラス", "artist": "Unknown artist", "src": "music/20 むしのコーラス.mp3" },
+    { "title": "21 いらっしゃいませ！どうぶつファミリーレストラン", "artist": "Unknown artist", "src": "music/21 いらっしゃいませ！どうぶつファミリーレストラン.mp3" },
+    { "title": "22 ロボットランドへえんそくだ！", "artist": "Unknown artist", "src": "music/22 ロボットランドへえんそくだ！.mp3" },
+    { "title": "23 バルカローレ ～バレエ音楽「四季」Op.67より", "artist": "Unknown artist", "src": "music/23 バルカローレ ～バレエ音楽「四季」Op.67より.mp3" },
+    { "title": "24 セレナーデ ～劇付随音楽「ハッサン」より", "artist": "Unknown artist", "src": "music/24 セレナーデ ～劇付随音楽「ハッサン」より.mp3" }
   ]
 }
