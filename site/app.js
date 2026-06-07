@@ -117,6 +117,41 @@
     play(n < 0 ? 0 : n);
   }
 
+  // --- Tap feedback (ripple + pop) --------------------------------------
+  // Spawn a ripple from the pointer position on any button / playlist row.
+  const prefersReducedMotion =
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function spawnRipple(target, x, y) {
+    const rect = target.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const ripple = document.createElement("span");
+    ripple.className = "ripple";
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${x - rect.left - size / 2}px`;
+    ripple.style.top = `${y - rect.top - size / 2}px`;
+    ripple.addEventListener("animationend", () => ripple.remove());
+    target.appendChild(ripple);
+  }
+
+  document.addEventListener("pointerdown", (e) => {
+    if (prefersReducedMotion) return;
+    const target = e.target.closest(".controls__btn, .playlist__item");
+    if (!target) return;
+    spawnRipple(target, e.clientX, e.clientY);
+    if (target.classList.contains("controls__btn")) {
+      // Pop the button back out once the press is released.
+      document.addEventListener("pointerup", () => {
+        target.classList.remove("is-pressed");
+        void target.offsetWidth; // reflow so rapid taps restart the animation
+        target.classList.add("is-pressed");
+      }, { once: true });
+    }
+  });
+  document.addEventListener("animationend", (e) => {
+    if (e.animationName === "btn-pop") e.target.classList.remove("is-pressed");
+  });
+
   // --- Controls ---------------------------------------------------------
   els.playBtn.addEventListener("click", () => {
     if (audio.paused) play();
