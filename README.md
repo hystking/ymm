@@ -34,7 +34,7 @@ file, and play them with continuous playback — all behind HTTP Basic Auth.
 
 ```
 .
-├── site/                 # static player (uploaded to S3 by Terraform)
+├── site/                 # static player (uploaded to S3 by deploy.sh)
 │   ├── index.html
 │   ├── app.js
 │   ├── style.css
@@ -91,8 +91,9 @@ terraform init
 terraform apply
 ```
 
-Terraform creates the S3 bucket, uploads the static site, sets up CloudFront
-with Origin Access Control, and publishes the Basic Auth CloudFront Function.
+Terraform creates the S3 bucket, sets up CloudFront with Origin Access
+Control, and publishes the Basic Auth CloudFront Function. (The bucket starts
+empty — `deploy.sh` uploads the site, music and playlist in the next step.)
 
 > Note: the bucket name must be globally unique. Change `project_name` if
 > `terraform apply` reports the bucket already exists.
@@ -144,13 +145,14 @@ Two ways to manage it:
 
 ## Updating the player UI
 
-If you change `index.html` / `app.js` / `style.css`, re-upload them:
+If you change `index.html` / `app.js` / `style.css`, just deploy again:
 
 ```bash
-./scripts/deploy.sh --all      # uploads site + music + playlist, invalidates /*
+./scripts/deploy.sh      # uploads site + music + playlist, invalidates /*
 ```
 
-(Or just run `terraform apply` again — Terraform tracks the site assets too.)
+Every `deploy.sh` run re-uploads the site assets, so there is nothing special
+to do — Terraform no longer manages the bucket contents.
 
 ## Changing the password
 

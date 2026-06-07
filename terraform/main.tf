@@ -13,23 +13,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-locals {
-  site_dir = "${path.module}/../site"
-
-  # Map file extensions to content types so the browser interprets assets correctly.
-  content_types = {
-    html = "text/html"
-    js   = "application/javascript"
-    css  = "text/css"
-    json = "application/json"
-    mp3  = "audio/mpeg"
-    png  = "image/png"
-    jpg  = "image/jpeg"
-    svg  = "image/svg+xml"
-    ico  = "image/x-icon"
-  }
-}
-
 # ---------------------------------------------------------------------------
 # S3 bucket — private origin for the static site + music + playlist.
 # ---------------------------------------------------------------------------
@@ -73,18 +56,9 @@ resource "aws_s3_bucket_policy" "site" {
 }
 
 # ---------------------------------------------------------------------------
-# Static site assets (everything under ../site). Music mp3s are uploaded
-# separately with deploy.sh so re-applying Terraform stays fast.
+# Note: all bucket *contents* (site assets, music, playlist) are uploaded by
+# scripts/deploy.sh, not Terraform. Terraform only owns the infrastructure.
 # ---------------------------------------------------------------------------
-resource "aws_s3_object" "site_assets" {
-  for_each = fileset(local.site_dir, "**/*")
-
-  bucket       = aws_s3_bucket.site.id
-  key          = each.value
-  source       = "${local.site_dir}/${each.value}"
-  etag         = filemd5("${local.site_dir}/${each.value}")
-  content_type = lookup(local.content_types, lower(regex("[^.]*$", each.value)), "application/octet-stream")
-}
 
 # ---------------------------------------------------------------------------
 # CloudFront Origin Access Control — modern replacement for OAI.
