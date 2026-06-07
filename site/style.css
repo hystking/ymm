@@ -8,17 +8,27 @@
   --radius: 14px;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   background: radial-gradient(1200px 600px at 50% -10%, #232752 0%, var(--bg) 60%);
   color: var(--text);
   display: flex;
   justify-content: center;
   padding: 24px;
+}
+
+/* Snappy taps: no double-tap zoom delay, no accidental text selection */
+.controls__btn,
+.playlist__item,
+input[type="range"] {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .player {
@@ -30,10 +40,6 @@ body {
   padding: 28px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
 }
-
-.player__header { text-align: center; margin-bottom: 22px; }
-.player__title { margin: 0; font-size: 30px; letter-spacing: 4px; }
-.player__subtitle { margin: 4px 0 0; color: var(--text-dim); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
 
 .now-playing { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
 .now-playing__art {
@@ -77,13 +83,15 @@ input[type="range"]::-moz-range-thumb {
   font-size: 16px; cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
-.controls__btn:hover { background: rgba(255, 255, 255, 0.14); }
 .controls__btn:active { transform: scale(0.92); }
 .controls__btn--play {
   width: 56px; height: 56px;
   background: var(--accent); font-size: 20px;
 }
-.controls__btn--play:hover { background: var(--accent-soft); }
+@media (hover: hover) {
+  .controls__btn:hover { background: rgba(255, 255, 255, 0.14); }
+  .controls__btn--play:hover { background: var(--accent-soft); }
+}
 .controls__btn--toggle.is-active { background: var(--accent); color: #fff; }
 .controls__volume { margin-left: auto; width: 90px; }
 
@@ -94,7 +102,9 @@ input[type="range"]::-moz-range-thumb {
   padding: 10px 12px; border-radius: 10px;
   cursor: pointer; transition: background 0.12s;
 }
-.playlist__item:hover { background: rgba(255, 255, 255, 0.05); }
+@media (hover: hover) {
+  .playlist__item:hover { background: rgba(255, 255, 255, 0.05); }
+}
 .playlist__item.is-playing { background: rgba(124, 92, 255, 0.18); }
 .playlist__index { width: 22px; color: var(--text-dim); font-variant-numeric: tabular-nums; font-size: 13px; }
 .playlist__item.is-playing .playlist__index { color: var(--accent-soft); }
@@ -105,3 +115,56 @@ input[type="range"]::-moz-range-thumb {
 
 .status { text-align: center; color: var(--text-dim); font-size: 13px; min-height: 18px; margin: 16px 0 0; }
 .status--error { color: #ff8a8a; }
+
+/* ── Mobile / narrow screens ───────────────────────────────── */
+@media (max-width: 560px) {
+  /* Edge-to-edge, exactly one viewport tall — no page scroll */
+  body {
+    padding: 0;
+    align-items: stretch;
+    min-height: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .player {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    max-width: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    /* Respect the notch / home-indicator safe areas */
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+  }
+
+  .now-playing { gap: 12px; margin-bottom: 16px; }
+  .now-playing__art { width: 60px; height: 60px; font-size: 26px; }
+
+  /* Let the controls wrap and give the volume slider its own full-width row */
+  .controls { flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 18px; }
+  .controls__volume { order: 1; width: 100%; margin-left: 0; }
+
+  /* Bigger, easier-to-hit tap targets */
+  .controls__btn { width: 52px; height: 52px; font-size: 18px; }
+  .controls__btn--play { width: 64px; height: 64px; font-size: 22px; }
+
+  /* The playlist absorbs the remaining height and scrolls internally */
+  .playlist {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .playlist__list {
+    flex: 1;
+    max-height: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .playlist__item { padding: 13px 12px; }
+
+  .status { margin: 10px 0 0; }
+}
