@@ -98,8 +98,6 @@
   }
 
   function prevIndex() {
-    // Restart current track if more than 3s in, else go to previous.
-    if (audio.currentTime > 3) return current;
     if (shuffle && tracks.length > 1) return nextIndex();
     return current - 1 >= 0 ? current - 1 : tracks.length - 1;
   }
@@ -110,13 +108,23 @@
     play(n);
   }
 
+  function playPrev() {
+    // Restart current track if more than 3s in, else go to previous track.
+    if (current >= 0 && audio.currentTime > 3) {
+      audio.currentTime = 0;
+      if (audio.paused) play();
+      return;
+    }
+    play(prevIndex());
+  }
+
   // --- Controls ---------------------------------------------------------
   els.playBtn.addEventListener("click", () => {
     if (audio.paused) play();
     else audio.pause();
   });
   els.nextBtn.addEventListener("click", playNext);
-  els.prevBtn.addEventListener("click", () => play(prevIndex()));
+  els.prevBtn.addEventListener("click", playPrev);
   els.shuffleBtn.addEventListener("click", () => {
     shuffle = !shuffle;
     els.shuffleBtn.classList.toggle("is-active", shuffle);
@@ -155,7 +163,7 @@
     if (e.target.tagName === "INPUT") return;
     if (e.code === "Space") { e.preventDefault(); audio.paused ? play() : audio.pause(); }
     else if (e.code === "ArrowRight") playNext();
-    else if (e.code === "ArrowLeft") play(prevIndex());
+    else if (e.code === "ArrowLeft") playPrev();
   });
 
   // --- Bootstrap --------------------------------------------------------
