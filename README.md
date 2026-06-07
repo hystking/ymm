@@ -43,8 +43,31 @@ file, and play them with continuous playback — all behind HTTP Basic Auth.
 ├── terraform/            # IaC: S3 + CloudFront + Basic Auth function
 └── scripts/
     ├── gen-playlist.sh   # build playlist.json from ./music
+    ├── serve.sh          # run the player locally (no AWS) — see "Run locally"
+    ├── serve.py          # tiny local HTTP server with /music routing + Range
     └── deploy.sh         # sync music + playlist to S3, invalidate cache
 ```
+
+## Run locally
+
+Want to try the player without touching AWS? Drop a few `.mp3` files into
+`./music/` and run:
+
+```bash
+./scripts/serve.sh          # http://127.0.0.1:8000
+./scripts/serve.sh 9000     # …or pick a port
+```
+
+This regenerates `playlist.json` and serves `./site` over HTTP, transparently
+mapping `/music/*` to your local `./music` directory — exactly the layout the
+player sees on CloudFront. Open the printed URL in your browser; continuous
+playback, shuffle, repeat, volume and **seeking** (HTTP Range requests) all
+work locally. Press `Ctrl+C` to stop.
+
+> The player loads `playlist.json` with `fetch()`, so opening
+> `site/index.html` directly via `file://` will not work — use this server.
+> Requires `python3` (already present on macOS and most Linux distros); no
+> other dependencies.
 
 ## Prerequisites
 

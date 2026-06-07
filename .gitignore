@@ -11,5 +11,9 @@ terraform/terraform.tfvars
 crash.log
 *.tfplan
 
+# Python (local serve.py byte-cache)
+__pycache__/
+*.pyc
+
 # OS
 .DS_Store
