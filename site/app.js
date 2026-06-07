@@ -110,12 +110,19 @@
     play(n);
   }
 
+  // Explicit "next" action (button / key): always wrap to the first track
+  // when pressed on the last one, regardless of the repeat setting.
+  function skipNext() {
+    const n = nextIndex();
+    play(n < 0 ? 0 : n);
+  }
+
   // --- Controls ---------------------------------------------------------
   els.playBtn.addEventListener("click", () => {
     if (audio.paused) play();
     else audio.pause();
   });
-  els.nextBtn.addEventListener("click", playNext);
+  els.nextBtn.addEventListener("click", skipNext);
   els.prevBtn.addEventListener("click", () => play(prevIndex()));
   els.shuffleBtn.addEventListener("click", () => {
     shuffle = !shuffle;
@@ -154,7 +161,7 @@
   document.addEventListener("keydown", (e) => {
     if (e.target.tagName === "INPUT") return;
     if (e.code === "Space") { e.preventDefault(); audio.paused ? play() : audio.pause(); }
-    else if (e.code === "ArrowRight") playNext();
+    else if (e.code === "ArrowRight") skipNext();
     else if (e.code === "ArrowLeft") play(prevIndex());
   });
 
